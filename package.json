@@ -1,0 +1,31 @@
+{
+  "name": "pastebin-clone",
+  "version": "0.0.1",
+  "description": "A fullstack pastebin clone",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srijan-paul/pastebin-clone.git"
+  },
+  "keywords": [
+    "react",
+    "express",
+    "pastebin",
+    "fullstack",
+    "web",
+    "mongodb"
+  ],
+  "author": "Srijan Paul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/srijan-paul/pastebin-clone/issues"
+  },
+  "homepage": "https://github.com/srijan-paul/pastebin-clone#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
