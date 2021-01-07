@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
+
+:root {
+  --main-color: #ea4c89;
+  --fg-color: #0d0c22;
+  --bg-color: #ffffff;
+  --speed: 500ms;
+}
+
+.heading {
+  text-align: center;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #40739e;
+  /* stroke-width: 100px; */
+  font-size: 3rem;
+  text-shadow: 3px 3px 0 #40739e, -1px -1px 0 #40739e, 1px -1px 0 #40739e,
+    -1px 1px 0 #40739e, 1px 1px 0 #40739e;
+}
+
+.info {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 8%;
+  font-family: "Roboto Slab", serif;
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .heading {
+    -webkit-text-stroke: 1px black;
+    -webkit-text-fill-color: white;
+  }
+}
+
+.content {
+  margin: auto;
+  width: 55%;
+  margin-top: 4%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.editor {
+  border: 3px solid black;
+  -webkit-box-shadow: -3px 33px 88px -59px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -3px 33px 88px -59px rgba(0, 0, 0, 1);
+  box-shadow: -3px 33px 88px -59px rgba(0, 0, 0, 1);
+}
+
+.titlebar {
+  background-color: #f3f3f4;
+  padding: 1%;
+  /* padding-left: 2%; */
+  padding-bottom: 2%;
+  height: 12px;
+  width: auto;
+}
+
+.dot {
+  height: 18px;
+  width: 18px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+#select {
+  float: left;
+  width: 40%;
+  border: none;
+}
+
+#filename-input {
+  /* border: none; */
+  font-family: "Montserrat", sans-serif;
+  width: 50%;
+  margin-left: 10%;
+}
+
+/* generic classes */
+
+.d8 {
+  width: 80%;
+  margin: auto;
+}
