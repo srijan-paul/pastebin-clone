@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Logo from './components/Logo'
+import Login from "./components/LogIn/Login";
+
+import Logo from "./components/Logo";
 
 // import brace from "brace";
 import AceEditor from "react-ace";
@@ -25,7 +28,6 @@ import "brace/theme/dawn";
 import "brace/theme/merbivore";
 import "brace/theme/textmate";
 
-
 // Maps the display names of languages to their
 // Ace theme names.
 const LangaugeList = new Map([
@@ -41,7 +43,7 @@ const LangaugeList = new Map([
 	["Swift", "swift"],
 ]);
 
-class App extends Component {
+export default class App extends Component {
 	// constructor(props) {
 	//   super(props);
 	// }
@@ -58,18 +60,29 @@ class App extends Component {
 			<div className="main">
 				<Navbar />
 				<div className="content">
-					<Header />
-					<Editor />
+					<Router>
+						<Route path="/login" component={Login} />
+						<Route path="/"  exact component={MainPage} />
+					</Router>
 				</div>
 			</div>
 		);
 	}
 }
 
+function MainPage() {
+	return (
+		<div>
+			<Header />
+			<Editor />
+		</div>
+	);
+}
+
 function Header() {
 	return (
 		<div className="d8">
-		<Logo fontSize="3rem" logoSize="40px"/>
+			<Logo fontSize="3rem" logoSize="7%" />
 			<p className="info">Share text and code snippets with the click of a button!</p>
 		</div>
 	);
@@ -155,5 +168,3 @@ function Dot(props) {
 		></div>
 	);
 }
-
-export default App;

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import "./Logo.css"
+import "./Logo.css";
 import "./Navbar.css";
 
 // function makeMenuItem(name, url, cname) {
@@ -23,7 +23,7 @@ export default class Navigation extends Component {
 	render() {
 		return (
 			<div className="navbar">
-				<h4 className="logo">CLIP IT!</h4>
+				<h4 className="logo">CLIP IT</h4>
 
 				<nav>
 					<ul className="nav-link">
@@ -31,14 +31,13 @@ export default class Navigation extends Component {
 							<a href="#">FAQ</a>
 						</li>
 						<li>
-							<a href="#">Log in</a>
+							<a href="/login">Log in</a>
 						</li>
 						<li>
 							<button className="login-btn">New Paste</button>
 						</li>
 					</ul>
 				</nav>
-	
 			</div>
 		);
 	}

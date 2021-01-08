@@ -26,6 +26,7 @@ a {
 }
 
 .nav-link li a:hover {
+	transition-duration: 400ms;
 	text-decoration: none;
 	color: #54a0ff;
 }
@@ -41,7 +42,7 @@ a {
 	padding: 9px 20px;
 	margin-right: 20px;
 	border: none;
-	background-color: #0088a9;
+	background-color: #3867d6;
 	color: white;
 	font-family: "Montserrat", monospace;
 	cursor: pointer;
@@ -49,5 +50,6 @@ a {
 }
 
 .login-btn:hover {
-	background-color: #222222;
+	transition-duration: 500ms;
+	background-color: #4b7bec;
 }
