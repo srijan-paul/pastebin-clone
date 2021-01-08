@@ -4,7 +4,10 @@
   "description": "A fullstack pastebin clone",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -25,7 +28,10 @@
   },
   "homepage": "https://github.com/srijan-paul/pastebin-clone#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "firebase": "^8.2.2",
+    "firebase-admin": "^9.4.2",
     "nodemon": "^2.0.7"
   }
 }

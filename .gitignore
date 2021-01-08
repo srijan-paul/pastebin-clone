@@ -116,3 +116,5 @@ dist
 .pnp.*
 ./frontend/node_modules
 ./frontend/build
+firebase-key.json
+todo.md

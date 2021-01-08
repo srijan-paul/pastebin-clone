@@ -1,9 +1,10 @@
 const express = require("express");
-
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("1234");
+app.get("/api", (req, res) => {
+	res.json({
+		foo: 1,
+	});
 });
 
 const port = process.env.PORT || 5000;

@@ -1,0 +1,9 @@
+.logo {
+	text-align: center;
+	font-weight: bold;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color: #54a0ff;
+	/* stroke-width: 100px; */
+	text-shadow: 3px 3px 0 #40739e, -1px -1px 0 #40739e, 1px -1px 0 #40739e, -1px 1px 0 #40739e,
+		1px 1px 0 #40739e;
+}
