@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import "../../App.css";
 import "./LogIn.css";
 
-
 export default class Login extends Component {
 	render() {
 		return (
@@ -18,7 +17,7 @@ export default class Login extends Component {
 export class Form extends Component {
 	render() {
 		return (
-			<div class="wrapper" style={{backgroundColor : "#ffffff"}}>
+			<div class="wrapper" style={{ backgroundColor: "#ffffff" }}>
 				<form class="login">
 					<p class="title">Log in</p>
 					<input type="text" placeholder="Username" autofocus />

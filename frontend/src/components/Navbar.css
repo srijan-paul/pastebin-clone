@@ -1,4 +1,4 @@
-.navbar {
+.nav-bar {
 	height: 65px;
 	display: flex;
 	justify-content: space-between;
@@ -12,7 +12,7 @@
 a {
 	font-family: "Montserrat", sans-serif;
 	font-size: 16px;
-	color: #ecf0f1;
+	color: #ecf0f1 !important;
 }
 
 .nav-link li {
@@ -28,7 +28,7 @@ a {
 .nav-link li a:hover {
 	transition-duration: 400ms;
 	text-decoration: none;
-	color: #54a0ff;
+	color: #54a0ff !important;
 }
 
 .logo {

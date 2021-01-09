@@ -118,3 +118,4 @@ dist
 ./frontend/build
 firebase-key.json
 todo.md
+.vscode

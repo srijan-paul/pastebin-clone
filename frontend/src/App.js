@@ -4,7 +4,9 @@ import axios from "axios";
 
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Login from "./components/LogIn/Login";
+// import Login from "./components/LogIn/Login";
+import SignUp from "./components/LogIn/SignUp";
+import AuthProvider from "./components/LogIn/AuthContext";
 
 import Logo from "./components/Logo";
 
@@ -44,10 +46,6 @@ const LangaugeList = new Map([
 ]);
 
 export default class App extends Component {
-	// constructor(props) {
-	//   super(props);
-	// }
-
 	componentDidMount() {
 		axios.get("/api").then((res) => {
 			const data = res.data;
@@ -58,13 +56,15 @@ export default class App extends Component {
 	render() {
 		return (
 			<div className="main">
-				<Navbar />
-				<div className="content">
-					<Router>
-						<Route path="/login" component={Login} />
-						<Route path="/"  exact component={MainPage} />
-					</Router>
-				</div>
+				<AuthProvider value={123}>
+					<Navbar />
+					<div className="content">
+						<Router>
+							<Route path="/login" component={SignUp} />
+							<Route path="/" exact component={MainPage} />
+						</Router>
+					</div>
+				</AuthProvider>
 			</div>
 		);
 	}

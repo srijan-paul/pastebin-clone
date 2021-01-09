@@ -22,7 +22,7 @@ import "./Navbar.css";
 export default class Navigation extends Component {
 	render() {
 		return (
-			<div className="navbar">
+			<div className="nav-bar">
 				<h4 className="logo">CLIP IT</h4>
 
 				<nav>
@@ -31,7 +31,7 @@ export default class Navigation extends Component {
 							<a href="#">FAQ</a>
 						</li>
 						<li>
-							<a href="/login">Log in</a>
+							<a href="/login">Sign In</a>
 						</li>
 						<li>
 							<button className="login-btn">New Paste</button>
