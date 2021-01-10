@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 export const AuthContext = React.createContext();
 
 export default function AuthProvider({ children }) {
-	// const [currentUser, setCurrentUser] = useState();
+	const [currentUser, setCurrentUser] = useState();
 
 	return (
 		<div>

@@ -30,6 +30,18 @@ function addNewUser(username, password, callback) {
 	if (callback) callback(userAdded);
 }
 
+async function validateUserCreds(username, password, callback) {
+	const doc = await users.doc(username).get();
+	if (!doc.exists) callback(false); // if user doesn't exist, then pretend the creds are invalid
+	const userdata = doc.data();
+
+	bcrypt.compare(password, userdata.hashed_password, (err, result) => {
+		if (err) throw err;
+		callback(result);
+	});
+}
+
 module.exports = {
 	addUser: addNewUser,
+	validateUserCreds,
 };

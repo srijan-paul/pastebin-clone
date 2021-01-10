@@ -97,6 +97,21 @@ function LogInPanel(props) {
 	const nameRef = React.createRef();
 	const passwordRef = React.createRef();
 
+	const onSubmit = () => {
+
+		const username = nameRef.current.get();
+		const password = passwordRef.current.get();
+
+		axios
+			.get("/login", {
+				username,
+				password,
+			})
+			.then((res) => {
+				console.log(res);
+			});
+	}
+
 	return (
 		<Panel>
 			<h2 className="text-center mb-4"> Log in </h2>
