@@ -4,23 +4,6 @@ import "../Logo.css";
 import "./Navbar.css";
 
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
-
-// function makeMenuItem(name, url, cname) {
-// 	return {
-// 		title: name,
-// 		url: url,
-// 		cname: cname,
-// 	};
-// }
-
-// const MenuItems = [
-// 	makeMenuItem("Home", "#", "nav-links"),
-// 	makeMenuItem("FAQ", "#", "nav-links"),
-// 	makeMenuItem("New Paste", "#", "nav-links"),
-// 	makeMenuItem("Sign up", "#", "nav-links"),
-// 	// makeMenuItem("Home", "#", "nav-links"),
-// ];
 
 export default class Navigation extends Component {
 	render() {
