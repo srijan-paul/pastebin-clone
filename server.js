@@ -5,7 +5,6 @@ const sessions = require("client-sessions");
 
 const dbUtils = require("./db");
 
-app.use(express.json());
 app.use(
 	sessions({
 		cookieName: "cookie",
@@ -13,6 +12,8 @@ app.use(
 		duration: 7 * 24 * 60 * 60 * 1000, // cookie lasts for a week
 	})
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/api", (req, res) => {
 	res.json({
@@ -33,6 +34,7 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
 	const { username, password } = req.body;
+	// console.log(req.body, res.body);
 	dbUtils.validateUserCreds(username, password, (success) => {
 		// console.log(`${username} logged in at ${formatDate(Date.now())}`);
 		res.json({ success });

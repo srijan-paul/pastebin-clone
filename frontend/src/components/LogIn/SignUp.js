@@ -1,11 +1,17 @@
-import React, { Component, useRef } from "react";
+import React, { Component, useRef, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
 
-import "../../App.css"
+import { AuthContext } from "./AuthContext";
+
+import "../../App.css";
+
+axios.defaults.headers.common = {
+	"Content-Type": "application/json",
+};
 
 export default class SignPage extends Component {
 	constructor(props) {
@@ -87,7 +93,8 @@ function SignUpPanel(props) {
 			</Form>
 
 			<div className="w-100 text-center mt-2">
-				Already have an account?<Btn onClick={props.onSwitch} text="Log in" />.
+				Already have an account?
+				<Btn onClick={props.onSwitch} text="Log in" />.
 			</div>
 		</Panel>
 	);
@@ -97,20 +104,21 @@ function LogInPanel(props) {
 	const nameRef = React.createRef();
 	const passwordRef = React.createRef();
 
+	const user = useContext(AuthContext);
+
 	const onSubmit = () => {
+		// const username = nameRef.current.value;
+		// const password = passwordRef.current.value;
 
-		const username = nameRef.current.get();
-		const password = passwordRef.current.get();
+		const req = {
+			username: nameRef.current.value,
+			password: passwordRef.current.value,
+		};
 
-		axios
-			.get("/login", {
-				username,
-				password,
-			})
-			.then((res) => {
-				console.log(res);
-			});
-	}
+		axios.post("/login", req).then((res) => {
+			console.log(res)
+		});
+	};
 
 	return (
 		<Panel>
@@ -125,11 +133,11 @@ function LogInPanel(props) {
 				<Form.Control type="password" ref={passwordRef} required />
 			</Form.Group>
 
-			<Button className="w-100 text-center mt-2" id="log-in-btn">
+			<Button className="w-100 text-center mt-2" id="log-in-btn" onClick={onSubmit}>
 				Log in
 			</Button>
 			<div className="w-100 text-center mt-2">
-				Don't have an account? <Btn onClick={props.onSwitch} text="Sign up"/>.
+				Don't have an account? <Btn onClick={props.onSwitch} text="Sign up" />.
 			</div>
 		</Panel>
 	);
@@ -149,7 +157,7 @@ function Panel(props) {
 
 function Btn(props) {
 	return (
-		<div onClick={props.onClick} style={{cursor: "pointer"}} className="btn-link">
+		<div onClick={props.onClick} style={{ cursor: "pointer" }} className="btn-link">
 			{props.text}
 		</div>
 	);

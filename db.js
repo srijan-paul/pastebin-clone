@@ -31,14 +31,20 @@ function addNewUser(username, password, callback) {
 }
 
 async function validateUserCreds(username, password, callback) {
-	const doc = await users.doc(username).get();
-	if (!doc.exists) callback(false); // if user doesn't exist, then pretend the creds are invalid
-	const userdata = doc.data();
-
-	bcrypt.compare(password, userdata.hashed_password, (err, result) => {
-		if (err) throw err;
-		callback(result);
-	});
+	try {
+		const doc = await users.doc(username).get();
+		if (!doc.exists) callback(false); // if user doesn't exist, then pretend the creds are invalid
+		const userdata = doc.data();
+	
+		bcrypt.compare(password, userdata.hashed_password, (err, result) => {
+			if (err) throw err;
+			callback(result);
+		});
+	} catch(e) {
+		console.log(e.message);
+		callback(false);
+	}
+	
 }
 
 module.exports = {

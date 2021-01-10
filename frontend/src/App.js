@@ -29,6 +29,10 @@ import "brace/theme/dawn";
 import "brace/theme/merbivore";
 import "brace/theme/textmate";
 
+axios.defaults.headers.common = {
+	"Content-Type": "application/json",
+};
+
 // Maps the display names of languages to their
 // Ace theme names.
 const LangaugeList = new Map([
@@ -45,12 +49,6 @@ const LangaugeList = new Map([
 ]);
 
 export default class App extends Component {
-	componentDidMount() {
-		axios.get("/api").then((res) => {
-			const data = res.data;
-			console.log(data);
-		});
-	}
 
 	render() {
 		return (
@@ -62,7 +60,6 @@ export default class App extends Component {
 							<Route path="/login" component={SignUp} />
 							<Route path="/" exact component={MainPage} />
 							<Route path="/home" exact component={MainPage} />
-
 						</div>
 					</Router>
 				</AuthProvider>
