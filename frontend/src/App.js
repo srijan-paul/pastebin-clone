@@ -3,8 +3,7 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
 import "./App.css";
-import Navbar from "./components/Navbar";
-// import Login from "./components/LogIn/Login";
+import Navbar from "./components/Navbar/Navbar";
 import SignUp from "./components/LogIn/SignUp";
 import AuthProvider from "./components/LogIn/AuthContext";
 
@@ -57,13 +56,15 @@ export default class App extends Component {
 		return (
 			<div className="main">
 				<AuthProvider value={123}>
-					<Navbar />
-					<div className="content">
-						<Router>
+					<Router>
+						<Navbar />
+						<div className="content">
 							<Route path="/login" component={SignUp} />
 							<Route path="/" exact component={MainPage} />
-						</Router>
-					</div>
+							<Route path="/home" exact component={MainPage} />
+
+						</div>
+					</Router>
 				</AuthProvider>
 			</div>
 		);

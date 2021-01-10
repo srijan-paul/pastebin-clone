@@ -18,7 +18,7 @@ body {
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 1)),
 		url(assets/mdb.png);
 	background-size: 25%;
-	min-height: 200vh;
+	min-height: 130vh;
 }
 
 .info {
@@ -43,9 +43,9 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
 	.content {
-		width: 80%;
+		width: 90%;
 		margin: auto;
 	}
 }

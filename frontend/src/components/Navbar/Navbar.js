@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import "./Logo.css";
+import "../Logo.css";
 import "./Navbar.css";
+
+import { Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // function makeMenuItem(name, url, cname) {
 // 	return {
@@ -23,8 +26,9 @@ export default class Navigation extends Component {
 	render() {
 		return (
 			<div className="nav-bar">
-				<h4 className="logo">CLIP IT</h4>
-
+				<Link to="/home" style={{textDecoration: "none"}}>
+					<h4 className="logo">CLIP IT</h4>
+				</Link>
 				<nav>
 					<ul className="nav-link">
 						<li>
@@ -34,7 +38,9 @@ export default class Navigation extends Component {
 							<a href="/login">Sign In</a>
 						</li>
 						<li>
-							<button className="login-btn">New Paste</button>
+							<button className="login-btn">
+								<Link to="/login">New Paste</Link>
+							</button>
 						</li>
 					</ul>
 				</nav>

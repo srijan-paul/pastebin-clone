@@ -12,7 +12,7 @@ const db = admin.firestore();
 const pastes = db.collection("pastes");
 const users = db.collection("users");
 
-async function addNewUser(username, password, callback) {
+function addNewUser(username, password, callback) {
 	const doc = users.doc(username);
 
 	let userAdded = true;

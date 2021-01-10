@@ -13,7 +13,6 @@ app.get("/api", (req, res) => {
 
 app.post("/register", (req, res) => {
 	const { username, password } = req.body;
-
 	dbUtils.addUser(username, password, (success) => {
 		if (success) {
 			res.json({ success });
