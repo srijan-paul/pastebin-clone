@@ -1,3 +1,7 @@
+*:focus {
+    outline: 0 !important;
+}
+
 .nav-bar {
 	height: 65px;
 	display: flex;
@@ -38,7 +42,7 @@ a {
 	cursor: pointer;
 }
 
-.login-btn {
+.new-btn {
 	padding: 9px 20px;
 	margin-right: 20px;
 	border: none;
@@ -47,9 +51,11 @@ a {
 	font-family: "Montserrat", monospace;
 	cursor: pointer;
 	border-radius: 50px;
+	outline: none;
 }
 
-.login-btn:hover {
+.new-btn:hover {
+	color: white;
 	transition-duration: 500ms;
 	background-color: #4b7bec;
 }
