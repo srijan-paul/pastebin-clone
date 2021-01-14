@@ -26,7 +26,7 @@ export default class ViewPaste extends Component {
 	}
 
 	render() {
-		return false ? (
+		return this.state.paste ? (
 			<Paste pasteData={this.state.paste} />
 		) : (
 			<div
