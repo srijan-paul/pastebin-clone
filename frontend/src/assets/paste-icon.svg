@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns="http://www.w3.org/2000/svg" width="36" height="48" viewBox="0 0 36 48">
+  <defs>
+    <style>
+      .a {
+        fill: #d3d4ed;
+      }
+    </style>
+  </defs>
+  <title>6 Paper_3</title>
+  <path class="a" d="M34.54,12.54,23.46,1.46A5,5,0,0,0,19.93,0H5A5,5,0,0,0,0,5V43a5,5,0,0,0,5,5H31a5,5,0,0,0,5-5V16.07A5,5,0,0,0,34.54,12.54ZM12,25h7a2,2,0,0,1,0,4H12a2,2,0,0,1,0-4ZM24,38H12a2,2,0,0,1,0-4H24a2,2,0,0,1,0,4Zm6.59-21H24a5,5,0,0,1-5-5V5.41a1,1,0,0,1,1.71-.7L31.29,15.29A1,1,0,0,1,30.59,17Z"/>
+</svg>

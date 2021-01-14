@@ -1,0 +1,25 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+*:focus {
+	outline: 0 !important;
+}
+
+:root {
+    --main-color: #ea4c89;
+	--fg-color: #0d0c22;
+    --bg-color: #ffffff;
+	--speed: 500ms;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}

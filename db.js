@@ -12,7 +12,7 @@ const db = admin.firestore();
 const pastes = db.collection("pastes");
 const users = db.collection("users");
 
-function addNewUser(username, password, callback) {
+function addUser(username, password, callback) {
 	const doc = users.doc(username);
 
 	let userAdded = true;
@@ -33,21 +33,39 @@ function addNewUser(username, password, callback) {
 async function validateUserCreds(username, password, callback) {
 	try {
 		const doc = await users.doc(username).get();
-		if (!doc.exists) callback(false); // if user doesn't exist, then pretend the creds are invalid
+		if (!doc.exists) return callback(false); // if user doesn't exist, then pretend the creds are invalid
 		const userdata = doc.data();
-	
+
 		bcrypt.compare(password, userdata.hashed_password, (err, result) => {
 			if (err) throw err;
 			callback(result);
 		});
-	} catch(e) {
-		console.log(e.message);
+	} catch (e) {
 		callback(false);
 	}
-	
+}
+
+function getPasteById(pasteId, callback) {
+	const docRef = pastes.doc(pasteId);
+
+	docRef.get().then((pasteSnapshot) => {
+		if (!pasteSnapshot.exists) return callback(false, null);
+		callback(true, pasteSnapshot.data());
+	});
+}
+
+function addPaste(paste, callback) {
+	pastes
+		.add(paste)
+		.then((ref) => {
+			callback(true, ref.id);
+		})
+		.catch(() => callback(false, null));
 }
 
 module.exports = {
-	addUser: addNewUser,
+	addUser,
+	addPaste,
 	validateUserCreds,
+	getPasteById,
 };

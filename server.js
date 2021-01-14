@@ -41,17 +41,17 @@ app.post("/login", (req, res) => {
 	});
 });
 
+app.get("/pastes/:id", (req, res) => {
+	dbUtils.getPasteById(req.params.id, (success, paste) => {
+		res.json({ success, paste });
+	});
+});
+
+app.post("/paste", (req, res) => {
+	dbUtils.addPaste(req.body, (success, id) => {
+		res.json({ success, id });
+	});
+});
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
-
-// function formatDate(date) {
-// 	const d = new Date(date);
-// 	let month = "" + (d.getMonth() + 1),
-// 		day = "" + d.getDate(),
-// 		year = d.getFullYear();
-
-// 	if (month.length < 2) month = "0" + month;
-// 	if (day.length < 2) day = "0" + day;
-
-// 	return [year, month, day].join("-");
-// }

@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./App.css";
+
 import Navbar from "./components/Navbar/Navbar";
 import SignUp from "./components/LogIn/SignUp";
-import AuthProvider from "./components/LogIn/AuthContext";
+import ViewPaste from "./ViewPaste";
+import { UserProvider } from "./components/LogIn/AuthContext";
 
 import Logo from "./components/Logo";
+import Titlebar from "./components/Titlebar/Titlebar";
 
-// import brace from "brace";
 import AceEditor from "react-ace";
 
 // Syntax modes
@@ -28,51 +30,52 @@ import "brace/theme/monokai";
 import "brace/theme/dawn";
 import "brace/theme/merbivore";
 import "brace/theme/textmate";
+import { Button } from "react-bootstrap";
 
 axios.defaults.headers.common = {
 	"Content-Type": "application/json",
 };
 
-// Maps the display names of languages to their
-// Ace theme names.
-const LangaugeList = new Map([
-	["Javascript", "javascript"],
-	["Lua", "lua"],
-	["C", "c_cpp"],
-	["C++", "c_cpp"],
-	["Python", "python"],
-	["Java", "java"],
-	["C#", "csharp"],
-	["TSX", "tsx"],
-	["Scheme", "scheme"],
-	["Swift", "swift"],
-]);
+export default function App() {
+	let [currentUser, setUser] = React.useState({ name: "Guest", isGuest: true });
+	const history = useHistory();
 
-export default class App extends Component {
-
-	render() {
-		return (
-			<div className="main">
-				<AuthProvider value={123}>
-					<Router>
-						<Navbar />
-						<div className="content">
-							<Route path="/login" component={SignUp} />
-							<Route path="/" exact component={MainPage} />
-							<Route path="/home" exact component={MainPage} />
-						</div>
-					</Router>
-				</AuthProvider>
-			</div>
-		);
+	function newPaste(data) {
+		axios
+			.post("/paste", {
+				filename: data.filename,
+				content: data.content,
+				language: data.language,
+				isGuestPost: currentUser.isGuest,
+				username: currentUser.name,
+				isPublic: true,
+			})
+			.then((res) => {
+				// console.log(history);
+				history.push("/paste/" + res.data.id);
+			});
 	}
+
+	return (
+		<div className="main">
+			<UserProvider value={currentUser}>
+				<Navbar />
+				<div className="content">
+					<Route path="/login" render={() => <SignUp onUserLogIn={setUser} />} />
+					<Route path="/" exact render={() => <MainPage newPaste={newPaste} />} />
+					<Route path="/home" exact render={() => <MainPage newPaste={newPaste} />} />
+					<Route path="/paste/:pasteId" component={ViewPaste} />
+				</div>
+			</UserProvider>
+		</div>
+	);
 }
 
-function MainPage() {
+function MainPage({ newPaste }) {
 	return (
 		<div>
 			<Header />
-			<Editor />
+			<Editor newPaste={newPaste} />
 		</div>
 	);
 }
@@ -89,80 +92,68 @@ function Header() {
 class Editor extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { lang: "javascript" };
+		this.state = { lang: "javascript", filename: "untitled" };
+		this.codeRef = React.createRef();
+		this.fileNameRef = React.createRef();
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	render() {
-		return (
-			<div className="editor">
-				<Titlebar
-					onLangChange={(langName) => {
-						this.setState({ lang: langName });
-					}}
-				/>
-				<div id="textarea-wrapper">
-					<AceEditor
-						mode={this.state.lang || "java"}
-						theme="textmate"
-						name="editor"
-						fontSize={18}
-						width="100%"
-						height="400px"
-						fontFamily="monospace"
-					/>
-				</div>
-			</div>
-		);
-	}
-}
-
-function Titlebar(props) {
-	return (
-		<div className="titlebar">
-			<Dot color="#e74c3c" />
-			<Dot color="#fbc531" />
-			<Dot color="#2ecc71" />
-
-			<div style={{ display: "inline-block", float: "right", marginRight: "4px" }}>
-				<LangSelect onSelect={props.onLangChange} />
-				<input type="text" id="filename-input" placeholder="filename" />
-			</div>
-		</div>
-	);
-}
-
-class LangSelect extends Component {
-	constructor(props) {
-		super(props);
-		this.selector = document.getElementById("lang-sel");
-	}
-
-	componentDidMount() {
-		this.selectEl = document.getElementById("lang-sel");
-		LangaugeList.forEach((themeName, displayName) => {
-			this.selectEl.options[this.selectEl.options.length] = new Option(displayName, themeName);
+	onSubmit() {
+		const content = this.codeRef.current.editor.getValue();
+		if (content.length < 10) return;
+		this.props.newPaste({
+			content: content,
+			language: this.state.lang,
+			filename: this.fileNameRef.current.value,
 		});
 	}
 
 	render() {
 		return (
-			<select
-				name="language"
-				id="lang-sel"
-				onChange={() => this.props.onSelect(this.selectEl.value)}
-			></select>
+			<div className="editor-wrapper">
+				<div className="editor">
+					<Titlebar
+						onLangChange={(langName) => {
+							this.setState({ lang: langName });
+						}}
+						fileNameRef={this.fileNameRef}
+					/>
+					<div id="textarea-wrapper">
+						<AceEditor
+							mode={this.state.lang || "java"}
+							theme="textmate"
+							name="editor"
+							fontSize={18}
+							width="100%"
+							height="500px"
+							fontFamily="monospace"
+							ref={this.codeRef}
+						/>
+					</div>
+				</div>
+
+				<Control onSubmit={this.onSubmit} />
+			</div>
 		);
 	}
 }
 
-function Dot(props) {
+function Control(props) {
+	let [active, setActive] = React.useState(true);
+
 	return (
-		<div
-			className="dot"
-			style={{
-				backgroundColor: props.color,
-				marginLeft: "10px",
-			}}
-		></div>
+		<div className="control-wrapper">
+			<Button
+				variant="outline-info"
+				onClick={() => {
+					if (active) {
+						props.onSubmit();
+						setActive(false);
+					}
+				}}
+			>
+				Create paste
+			</Button>
+		</div>
 	);
 }

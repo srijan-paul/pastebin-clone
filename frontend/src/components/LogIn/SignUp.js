@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
 
-import { AuthContext } from "./AuthContext";
+import { UserContext } from "./AuthContext";
 
 import "../../App.css";
 
@@ -21,7 +21,7 @@ export default class SignPage extends Component {
 
 		this.state = {
 			currentPanel: null,
-			logInPanel: <LogInPanel onSwitch={this.switchToSignUp} />,
+			logInPanel: <LogInPanel onSwitch={this.switchToSignUp} updateUser={this.props.onUserLogIn} />,
 			signUpPanel: <SignUpPanel onSwitch={this.switchToLogIn} />,
 		};
 	}
@@ -104,19 +104,17 @@ function LogInPanel(props) {
 	const nameRef = React.createRef();
 	const passwordRef = React.createRef();
 
-	const user = useContext(AuthContext);
-
 	const onSubmit = () => {
-		// const username = nameRef.current.value;
-		// const password = passwordRef.current.value;
+		const username = nameRef.current.value;
+		const password = passwordRef.current.value;
 
-		const req = {
-			username: nameRef.current.value,
-			password: passwordRef.current.value,
-		};
+		const req = { username, password };
 
 		axios.post("/login", req).then((res) => {
-			console.log(res)
+			props.updateUser({
+				name: username,
+				isGuest: false,
+			});
 		});
 	};
 

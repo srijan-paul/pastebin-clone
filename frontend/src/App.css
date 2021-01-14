@@ -1,24 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
-:root {
-	--main-color: #ea4c89;
-	--fg-color: #0d0c22;
-	--bg-color: #ffffff;
-	--speed: 500ms;
-}
-
-
 body {
+	background-size: 25%;
+	min-height: 130vh;
+}
+
+.main {
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 1)),
 		url(assets/mdb.png);
 	background-size: 25%;
-	min-height: 130vh;
+	background-color: #fdfdfd;
+
 }
 
 .info {
@@ -38,7 +31,7 @@ body {
 
 .content {
 	margin: auto;
-	width: 55%;
+	width: 60%;
 	margin-top: 4%;
 	font-family: "Montserrat", sans-serif;
 }
@@ -51,7 +44,7 @@ body {
 }
 
 .editor {
-	border: 3px solid #3c6382;
+	border: 2px solid #446cb3;
 	-webkit-box-shadow: 10px 9px 17px -7px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 9px 17px -7px rgba(0,0,0,0.75);
 	box-shadow: 10px 9px 17px -7px rgba(0,0,0,0.75);
@@ -87,6 +80,13 @@ body {
 	font-family: "Montserrat", sans-serif;
 	width: 50%;
 	margin-left: 10%;
+}
+
+.control-wrapper {
+	width: 100%;
+	padding: 0 1rem 0 1rem;
+	/* text-align: center; */
+	margin-top: 5%;
 }
 
 /* generic classes */
