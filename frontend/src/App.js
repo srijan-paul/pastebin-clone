@@ -31,6 +31,7 @@ import "brace/theme/dawn";
 import "brace/theme/merbivore";
 import "brace/theme/textmate";
 import { Button } from "react-bootstrap";
+import UserProfile from "./UserProfile";
 
 axios.defaults.headers.common = {
 	"Content-Type": "application/json",
@@ -53,6 +54,9 @@ export default function App() {
 			.then((res) => {
 				// console.log(history);
 				history.push("/paste/" + res.data.id);
+			})
+			.catch((e) => {
+				console.log(e);
 			});
 	}
 
@@ -65,6 +69,7 @@ export default function App() {
 					<Route path="/" exact render={() => <MainPage newPaste={newPaste} />} />
 					<Route path="/home" exact render={() => <MainPage newPaste={newPaste} />} />
 					<Route path="/paste/:pasteId" component={ViewPaste} />
+					<Route path="/user/:name" component={UserProfile} />
 				</div>
 			</UserProvider>
 		</div>

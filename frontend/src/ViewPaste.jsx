@@ -53,7 +53,7 @@ function Paste({ pasteData }) {
 				mode={pasteData.language}
 				theme="textmate"
 				name="editor-view"
-				fontSize={18}
+				fontSize={16}
 				width="100%"
 				height="500px"
 				fontFamily="monospace"

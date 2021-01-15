@@ -47,6 +47,12 @@ app.get("/pastes/:id", (req, res) => {
 	});
 });
 
+app.get("/users/:id", (req, res) => {
+	dbUtils.getPublicUserData(req.params.id, (success, data) => {
+		res.json({ success, data });
+	});
+});
+
 app.post("/paste", (req, res) => {
 	dbUtils.addPaste(req.body, (success, id) => {
 		res.json({ success, id });

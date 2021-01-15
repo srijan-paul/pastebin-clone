@@ -30,6 +30,37 @@ function addUser(username, password, callback) {
 	if (callback) callback(userAdded);
 }
 
+function getPublicUserData(username, callback) {
+	const docRef = users.doc(username);
+
+	docRef.get().then((snapshot) => {
+		if (!snapshot.exists) return callback(false, null);
+		const userData = {
+			name: username,
+			pastes: [],
+		};
+
+		const query = pastes.where("username", "==", username);
+		query
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					const paste = doc.data();
+					userData.pastes.push({
+						id: doc.id,
+						name: paste.filename,
+						createdAt: paste.createdAt ? paste.createdAt.toMillis() : 0,
+					});
+				});
+				callback(true, userData);
+			})
+			.catch((e) => {
+				console.log("Error: ", e.message);
+				callback(false, "temporary server error");
+			});
+	});
+}
+
 async function validateUserCreds(username, password, callback) {
 	try {
 		const doc = await users.doc(username).get();
@@ -55,6 +86,7 @@ function getPasteById(pasteId, callback) {
 }
 
 function addPaste(paste, callback) {
+	paste.createdAt = admin.firestore.Timestamp.now();
 	pastes
 		.add(paste)
 		.then((ref) => {
@@ -68,4 +100,5 @@ module.exports = {
 	addPaste,
 	validateUserCreds,
 	getPasteById,
+	getPublicUserData,
 };

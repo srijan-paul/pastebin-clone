@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import "../Logo.css";
 import "./Navbar.css";
 
 import { Link } from "react-router-dom";
-import { UserContext } from "../LogIn/AuthContext";
+import UserContext from "../LogIn/AuthContext";
 
 import PlusIcon from "../../assets/new-paste.svg";
 import GuestIcon from "../../assets/guest.svg";
@@ -21,7 +21,7 @@ export default function Navigation() {
 			<nav>
 				<div className="nav-items">
 					<NavItem>
-						{user.isGuest ? <a href="/login">Sign In</a> : <UserInfo user={user} />}
+						{user.isGuest ? <a className="nv-link" href="/login">Sign In</a> : <UserInfo user={user} />}
 					</NavItem>
 					<NavBtn icon={GuestIcon} />
 					<NavBtn icon={PlusIcon} to="/home" />
