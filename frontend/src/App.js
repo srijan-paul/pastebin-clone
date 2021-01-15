@@ -123,7 +123,7 @@ class Editor extends Component {
 							mode={this.state.lang || "java"}
 							theme="textmate"
 							name="editor"
-							fontSize={18}
+							fontSize={16}
 							width="100%"
 							height="500px"
 							fontFamily="monospace"

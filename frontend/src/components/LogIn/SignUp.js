@@ -1,11 +1,9 @@
-import React, { Component, useRef, useContext } from "react";
+import React, { Component, useRef } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
-
-import { UserContext } from "./AuthContext";
 
 import "../../App.css";
 
@@ -54,10 +52,57 @@ function SignUpPanel(props) {
 	const pwRef = useRef();
 	const pwconfRef = useRef();
 
-	const onFormSubmit = () => {
+	const minNameLength = 6;
+	const maxNameLength = 14;
+
+	let [isPwValid, setPwValid] = React.useState(true);
+	let [isConfirmPwValid, setConfirmPwValid] = React.useState(true);
+	let [isNameValid, setNameValid] = React.useState(true);
+
+	function validateName() {
+		const name = nameRef.current.value;
+		if (name.length === 0) return true;
+		setNameValid(name.length >= minNameLength && name.length <= maxNameLength);
+	}
+
+	const [pwMinLength, pwMaxLength] = [8, 20];
+	function validatePassword() {
+		const pwRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{8,}$/;
+		const pw = pwRef.current.value;
+		setPwValid(pwRegex.test(pw));
+	}
+
+	function validateConfirmedPassword() {
+		const confPw = pwconfRef.current.value;
+		const pw = pwRef.current.value;
+		setConfirmPwValid(confPw === pw && pw.length > 0);
+	}
+
+	const [isFormValid, setFormValid] = React.useState(true);
+
+	function validateForm() {
+		validateName();
+		validatePassword();
+		validateConfirmedPassword();
+		setFormValid(
+			isNameValid &&
+				isPwValid &&
+				isConfirmPwValid &&
+				nameRef.current.value.length > 0 &&
+				pwRef.current.value.length > 0
+		);
+	}
+
+	const [formSubmitted, setFormSubmitted] = React.useState(false);
+
+	function onFormSubmit() {
+		if (formSubmitted) return;
+		validateForm();
+		if (!isFormValid) return;
 		const password = pwRef.current.value;
 		const username = nameRef.current.value;
 
+		setFormSubmitted(true);
 		axios
 			.post("/register", {
 				username,
@@ -66,7 +111,7 @@ function SignUpPanel(props) {
 			.then((res) => {
 				console.log(res);
 			});
-	};
+	}
 
 	return (
 		<Panel>
@@ -74,19 +119,34 @@ function SignUpPanel(props) {
 			<Form>
 				<Form.Group id="username">
 					<Form.Label>Username</Form.Label>
-					<Form.Control type="text" ref={nameRef} required />
+					<Form.Control type="text" ref={nameRef} onChange={validateName} required />
+					<HelpLabel isVisible={!isNameValid}>
+						Username must be between {minNameLength}-{maxNameLength} characters. Only alphanumerics
+						and '_' , '-' allowed.`
+					</HelpLabel>
 				</Form.Group>
 
 				<Form.Group id="password">
 					<Form.Label>Password</Form.Label>
-					<Form.Control type="password" ref={pwRef} required />
+					<Form.Control type="password" ref={pwRef} onChange={validatePassword} required />
+					<HelpLabel isVisible={!isPwValid}>
+						Must have {pwMinLength} - {pwMaxLength} eight characters, at least one upper and lower
+						case English letter, one number and one special character.
+					</HelpLabel>
 				</Form.Group>
 
 				<Form.Group id="passwod-confirm">
 					<Form.Label>Confirm Password</Form.Label>
-					<Form.Control type="password" ref={pwconfRef} required />
+					<Form.Control
+						type="password"
+						ref={pwconfRef}
+						onChange={validateConfirmedPassword}
+						required
+					/>
+					<HelpLabel isVisible={!isConfirmPwValid}>Passwords do not match.</HelpLabel>
 				</Form.Group>
 
+				<HelpLabel isVisible={!isFormValid}>Fields cannot be empty.</HelpLabel>
 				<Button className="w-100 text-center mt-2" id="sign-up-btn" onClick={onFormSubmit}>
 					Sign Up
 				</Button>
@@ -161,16 +221,16 @@ function Btn(props) {
 	);
 }
 
-// function HelpLabel(props) {
-// 	return (
-// 		<div>
-// 			{props.isVisible ? (
-// 				<Form.Text id="passwordHelpBlock" muted>
-// 					<span style={{ color: "#d63031", fontWeight: "500" }}>{props.message}</span>
-// 				</Form.Text>
-// 			) : (
-// 				""
-// 			)}
-// 		</div>
-// 	);
-// }
+function HelpLabel(props) {
+	return (
+		<div>
+			{props.isVisible ? (
+				<Form.Text id="passwordHelpBlock" muted>
+					<span style={{ color: "#d63031", fontWeight: "500" }}>{props.children}</span>
+				</Form.Text>
+			) : (
+				""
+			)}
+		</div>
+	);
+}
