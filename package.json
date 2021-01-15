@@ -30,6 +30,7 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "client-sessions": "^0.8.0",
+    "concurrently": "^5.3.0",
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
