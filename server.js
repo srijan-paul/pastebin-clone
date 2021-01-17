@@ -6,7 +6,7 @@ const app = express();
 require("dotenv").config();
 const dbUtils = require("./db");
 
-const content = express.static(path.join(__dirname, 'frontend', 'build'))
+const content = express.static(path.join(__dirname, 'build'))
 
 app.use(content);
 app.use('/login', content);
