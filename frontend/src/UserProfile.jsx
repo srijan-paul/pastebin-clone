@@ -11,7 +11,7 @@ export default function UserProfile(props) {
 	const [userData, setUserData] = React.useState(null);
 
 	React.useEffect(() => {
-		axios.get("/users/" + userName).then((res) => {
+		axios.get("/api/users/" + userName).then((res) => {
 			if (res.data.success) {
 				setUserData(res.data.data);
 			}

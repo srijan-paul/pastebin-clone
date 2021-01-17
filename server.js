@@ -1,27 +1,12 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const sessions = require("client-sessions");
-
 const dbUtils = require("./db");
 
-app.use(
-	sessions({
-		cookieName: "cookie",
-		secret: process.env.SECRET_KEY,
-		duration: 7 * 24 * 60 * 60 * 1000, // cookie lasts for a week
-	})
-);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/api", (req, res) => {
-	res.json({
-		foo: 1,
-	});
-});
-
-app.post("/register", (req, res) => {
+app.post("/api/register", (req, res) => {
 	const { username, password } = req.body;
 	dbUtils.addUser(username, password, (success) => {
 		if (success) {
@@ -32,28 +17,34 @@ app.post("/register", (req, res) => {
 	});
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/login", (req, res) => {
 	const { username, password } = req.body;
-	// console.log(req.body, res.body);
-	dbUtils.validateUserCreds(username, password, (success) => {
-		// console.log(`${username} logged in at ${formatDate(Date.now())}`);
+	dbUtils.validateUserCreds(username, password, (success, sessionId) => {
+		sessionId = success ? sessionId : "";
+		res.json({ success, sessionId });
+	});
+});
+
+app.post("/api/users/authenticate", (req, res) => {
+	const { username, sessionId } = req.body;
+	dbUtils.authenticateUser(username, sessionId, (success) => {
 		res.json({ success });
 	});
 });
 
-app.get("/pastes/:id", (req, res) => {
+app.get("/api/pastes/:id", (req, res) => {
 	dbUtils.getPasteById(req.params.id, (success, paste) => {
 		res.json({ success, paste });
 	});
 });
 
-app.get("/users/:id", (req, res) => {
+app.get("/api/users/:id", (req, res) => {
 	dbUtils.getPublicUserData(req.params.id, (success, data) => {
 		res.json({ success, data });
 	});
 });
 
-app.post("/paste", (req, res) => {
+app.post("/api/paste", (req, res) => {
 	dbUtils.addPaste(req.body, (success, id) => {
 		res.json({ success, id });
 	});

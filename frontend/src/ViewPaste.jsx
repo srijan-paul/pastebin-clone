@@ -17,7 +17,7 @@ export default class ViewPaste extends Component {
 	}
 
 	componentDidMount() {
-		axios.get(`/pastes/${this.pasteId}`).then((res) => {
+		axios.get(`/api/pastes/${this.pasteId}`).then((res) => {
 			if (res.data.success) {
 				this.setState({ paste: res.data.paste });
 			} else {

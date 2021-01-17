@@ -1,7 +1,7 @@
 const firebase = require("firebase/app");
 const admin = require("firebase-admin");
 const serviceAccount = require("./firebase-key.json");
-
+const uuid = require("uuid-random");
 const bcrypt = require("bcrypt");
 
 admin.initializeApp({
@@ -62,14 +62,19 @@ function getPublicUserData(username, callback) {
 }
 
 async function validateUserCreds(username, password, callback) {
+	const docRef = users.doc(username);
 	try {
-		const doc = await users.doc(username).get();
+		const doc = await docRef.get();
 		if (!doc.exists) return callback(false); // if user doesn't exist, then pretend the creds are invalid
 		const userdata = doc.data();
 
 		bcrypt.compare(password, userdata.hashed_password, (err, result) => {
 			if (err) throw err;
-			callback(result);
+			const sessionId = uuid();
+			if (result) {
+				docRef.update({ sessionId });
+			}
+			callback(result, sessionId);
 		});
 	} catch (e) {
 		callback(false);
@@ -95,10 +100,20 @@ function addPaste(paste, callback) {
 		.catch(() => callback(false, null));
 }
 
+function authenticateUser(userName, sessionId, callback) {
+	const docRef = users.doc(userName);
+	docRef.get().then((snapshot) => {
+		if (!snapshot.exists) callback(false);
+		const userData = snapshot.data();
+		callback(userData.sessionId == sessionId);
+	});
+}
+
 module.exports = {
 	addUser,
 	addPaste,
 	validateUserCreds,
 	getPasteById,
 	getPublicUserData,
+	authenticateUser,
 };

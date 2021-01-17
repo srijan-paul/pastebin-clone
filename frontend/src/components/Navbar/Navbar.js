@@ -21,7 +21,13 @@ export default function Navigation() {
 			<nav>
 				<div className="nav-items">
 					<NavItem>
-						{user.isGuest ? <a className="nv-link" href="/login">Sign In</a> : <UserInfo user={user} />}
+						{user.isGuest ? (
+							<a className="nv-link" href="/login">
+								Sign In
+							</a>
+						) : (
+							<UserInfo user={user} />
+						)}
 					</NavItem>
 					<NavBtn icon={GuestIcon} />
 					<NavBtn icon={PlusIcon} to="/home" />
@@ -46,5 +52,9 @@ function NavItem({ children }) {
 }
 
 function UserInfo({ user }) {
-	return <div className="userinfo-wrapper">{user.name}</div>;
+	return (
+		<a className="nv-link" href={"/user/" + user.name}>
+			{user.name}
+		</a>
+	);
 }

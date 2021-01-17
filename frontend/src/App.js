@@ -43,7 +43,7 @@ export default function App() {
 
 	function newPaste(data) {
 		axios
-			.post("/paste", {
+			.post("/api/paste", {
 				filename: data.filename,
 				content: data.content,
 				language: data.language,
@@ -59,6 +59,25 @@ export default function App() {
 				console.log(e);
 			});
 	}
+
+	React.useEffect(() => {
+		const username = sessionStorage.getItem("username");
+		const sessionId = sessionStorage.getItem("sessionId");
+		if (!(username && sessionId)) return;
+		axios
+			.post("/api/users/authenticate", {
+				username,
+				sessionId,
+			})
+			.then((res) => {
+				if (res.data.success) {
+					setUser({ name: username, isGuest: false, sessionId: sessionId });
+				}
+			})
+			.catch((e) => {
+				console.log("Failed to authenticate user from local storage: " + e.message);
+			});
+	}, []);
 
 	return (
 		<div className="main">

@@ -104,12 +104,12 @@ function SignUpPanel(props) {
 
 		setFormSubmitted(true);
 		axios
-			.post("/register", {
+			.post("/api/register", {
 				username,
 				password,
 			})
 			.then((res) => {
-				console.log(res);
+				console.log("signed in successfully.");
 			});
 	}
 
@@ -170,12 +170,21 @@ function LogInPanel(props) {
 
 		const req = { username, password };
 
-		axios.post("/login", req).then((res) => {
-			props.updateUser({
-				name: username,
-				isGuest: false,
+		axios
+			.post("/api/login", req)
+			.then((res) => {
+				if (res.data.success) {
+					props.updateUser({
+						name: username,
+						isGuest: false,
+					});
+					sessionStorage.setItem("username", username);
+					sessionStorage.setItem("sessionId", res.data.sessionId);
+				}
+			})
+			.catch((e) => {
+				console.log("login failed: " + e.message);
 			});
-		});
 	};
 
 	return (
