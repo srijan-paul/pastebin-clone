@@ -4,14 +4,16 @@ import React, { useContext } from "react";
 import "../Logo.css";
 import "./Navbar.css";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../LogIn/AuthContext";
 
 import PlusIcon from "../../assets/new-paste.svg";
 import GuestIcon from "../../assets/guest.svg";
+import MemberIcon from "../../assets/member.svg";
 
 export default function Navigation() {
 	const user = useContext(UserContext);
+	const history = useHistory();
 
 	return (
 		<div className="nav-bar">
@@ -29,7 +31,16 @@ export default function Navigation() {
 							<UserInfo user={user} />
 						)}
 					</NavItem>
-					<NavBtn icon={GuestIcon} />
+					<NavBtn
+						icon={user.isGuest ? GuestIcon : MemberIcon}
+						onClick={
+							!user.isGuest
+								? () => {
+										history.push("/user/" + user.name);
+								  }
+								: null
+						}
+					/>
 					<NavBtn icon={PlusIcon} to="/home" />
 				</div>
 			</nav>
@@ -39,7 +50,7 @@ export default function Navigation() {
 
 function NavBtn(props) {
 	return (
-		<div className="nav-item">
+		<div className="nav-item" onClick={props.onClick}>
 			<Link className="nav-button" to={props.to}>
 				<img src={props.icon} alt="icon" width="30px" />
 			</Link>

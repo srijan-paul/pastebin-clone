@@ -67,7 +67,7 @@ function SignUpPanel(props) {
 
 	const [pwMinLength, pwMaxLength] = [8, 20];
 	function validatePassword() {
-		const pwRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{8,}$/;
+		const pwRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{8,21}$/;
 		const pw = pwRef.current.value;
 		setPwValid(pwRegex.test(pw));
 	}

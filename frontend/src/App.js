@@ -52,7 +52,6 @@ export default function App() {
 				isPublic: true,
 			})
 			.then((res) => {
-				// console.log(history);
 				history.push("/paste/" + res.data.id);
 			})
 			.catch((e) => {

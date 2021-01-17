@@ -70,5 +70,9 @@ function UserCard({ userData }) {
 }
 
 function PostLink({ paste }) {
-	return <a href={"/paste/" + paste.id}>{paste.name}</a>;
+	return (
+		<div>
+			<a href={"/paste/" + paste.id}>{paste.name}</a>
+		</div>
+	);
 }
