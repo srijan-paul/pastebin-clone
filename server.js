@@ -1,7 +1,18 @@
 const express = require("express");
+const path = require('path');
+
+
 const app = express();
 require("dotenv").config();
 const dbUtils = require("./db");
+
+const content = express.static(path.join(__dirname, 'frontend', 'build'))
+
+app.use(content);
+app.use('/login', content);
+app.use('/user/:id', content);
+app.use('/paste/:id', content);
+app.use('/home/:id', content);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
